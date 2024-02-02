@@ -5,3 +5,5 @@ Using Sping boot + JPA + mySQL
 # Update Note
 ### v0 
 - Product add/query
+### v0.1
+- Product delete/update

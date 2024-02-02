@@ -15,7 +15,7 @@ public class ProductDaoImpl implements ProductDao{
 	ProductRepository pr;
 
 	@Override
-	public Product add(Product p) {
+	public Product save(Product p) {
 		return pr.save(p);
 	}
 
@@ -27,5 +27,15 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public List<Product> queryCategory(Integer index) {
 		return pr.findAllByCategory(index);
+	}
+
+	@Override
+	public Product queryId(Integer id) {
+		return pr.findById(id).orElse(null);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		pr.deleteById(id);
 	}
 }

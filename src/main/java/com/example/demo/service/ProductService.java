@@ -13,22 +13,30 @@ public class ProductService {
 	@Autowired
 	ProductDaoImpl pdi;
 	
-	public Product add(Product p) {
+	public Product update(Product p) {
 		if (p.getName() == "" | p.getName() == null) {
 			return null;
 		} else if (p.getCategory() == null | p.getCategory() == -1) {
 			p.setCategory(0);
-			return pdi.add(p);
+			return pdi.save(p);
 		} else {
-			return pdi.add(p);
+			return pdi.save(p);
 		}
 	}
 	
-	public List<Product> showProduct(Integer categoryIndex) {
+	public List<Product> showProducts(Integer categoryIndex) {
 		if (categoryIndex == -1) {
 			return pdi.queryAll();
 		} else {
 			return pdi.queryCategory(categoryIndex);
 		}
+	}
+	
+	public Product showProduct(Integer id) {
+		return pdi.queryId(id);
+	}
+	
+	public void delete(Integer id) {
+		pdi.delete(id);
 	}
 }
