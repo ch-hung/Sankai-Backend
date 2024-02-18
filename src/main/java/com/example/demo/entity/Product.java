@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.vo.UploadProduct;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,4 +25,14 @@ public class Product {
 	private Integer price;
 	private String url;
 	private Integer category;
+	
+	public Product toProduct(UploadProduct uploadProduct, String saveurl) {
+		Product p = new Product();
+		p.setName(uploadProduct.getName());
+		p.setDetail(uploadProduct.getDetail());
+		p.setPrice(uploadProduct.getPrice());
+		p.setUrl(saveurl);
+		p.setCategory(uploadProduct.getCategory());
+		return p;
+	}
 }
