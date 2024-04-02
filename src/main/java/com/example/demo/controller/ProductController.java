@@ -21,11 +21,11 @@ import com.example.demo.service.ProductService;
 @RestController
 public class ProductController {
 	@Autowired
-	ProductService productService;
+	private ProductService productService;
 
 	// Back desk - create & update
 	@PostMapping("/product/update")
-	ResponseEntity<Product> update(@ModelAttribute("Product") Product p) {
+	public ResponseEntity<Product> update(@ModelAttribute("Product") Product p) {
 		Product newP = productService.update(p);
 		if (newP != null) {
 			return new ResponseEntity<>(newP, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class ProductController {
 	// categoryIndex = -1 => show all
 	// categoryIndex > 0 => show by category
 	@GetMapping("/product/show/category/{categoryIndex}")
-	ResponseEntity<List<Product>> category(@PathVariable Integer categoryIndex) {
+	public ResponseEntity<List<Product>> category(@PathVariable Integer categoryIndex) {
 		List<Product> p = productService.showProducts(categoryIndex);
 		if (p.size() != 0) {
 			return new ResponseEntity<>(p, HttpStatus.OK);
@@ -50,19 +50,19 @@ public class ProductController {
 	// categoryIndex > 0 => show by category
 	// page start from 0
 	@GetMapping("/product/show/category/{categoryIndex}/{page}")
-	ResponseEntity<Page<Product>> category(@PathVariable Integer categoryIndex, @PathVariable Integer page) {
+	public ResponseEntity<Page<Product>> category(@PathVariable Integer categoryIndex, @PathVariable Integer page) {
 		Page<Product> p = productService.showProductsPage(categoryIndex, page);
 		return new ResponseEntity<>(p, HttpStatus.OK);
 	}
 
 	@GetMapping("/product/show/{id}")
-	ResponseEntity<Product> show(@PathVariable Integer id) {
+	public ResponseEntity<Product> show(@PathVariable Integer id) {
 		return new ResponseEntity<>(productService.showProduct(id), HttpStatus.OK);
 	}
 
 	// Back desk - delete
 	@DeleteMapping("/product/delete")
-	ResponseEntity<Product> delete(Integer id) {
+	public ResponseEntity<Product> delete(Integer id) {
 		productService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

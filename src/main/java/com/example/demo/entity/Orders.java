@@ -18,13 +18,14 @@ public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer customer;
+	// customer number
+	// Date().getTime()
+	private Long customer;
+	private Integer tablenum;
 	private Integer product;
 	private Integer amount;
 	// status
-	// 0: ordering
-	// 1: preparing
-	// 2: sent
-	// 3: checked
+	// 0: ordered
+	// 1: paid
 	private Integer status;
 }

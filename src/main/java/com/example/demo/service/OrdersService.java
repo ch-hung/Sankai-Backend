@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,45 +16,21 @@ public class OrdersService {
 	OrdersDaoImpl ordersDaoImpl;
 	@Autowired
 	OrdersRepository ordersRepository;
-
-	public Orders update(Orders o) {
-		if (o.getStatus() == null) {
-			o.setStatus(0);
-		}
+	
+	// add ONE orders
+	public Orders add(Orders o) {
 		return ordersRepository.save(o);
 	}
-
-	public List<Orders> getAll() {
-		return ordersRepository.findAll();
-	}
-
-	public List<Orders> getCustomer(Integer customer) {
-		return ordersRepository.findAllByCustomerAndStatusLessThanOrderByStatusDesc(customer, 3);
-	}
-
-	public List<Orders> sendOrders(Integer customer) {
-		List<Orders> os1 = ordersRepository.findAllByCustomerAndStatus(customer, 0);
-		for (int i = 0; i < os1.size(); i++) {
-			nextStatus(os1.get(i).getId());
-		}
-		return os1;
-	}
 	
-	public void delete(Integer id) {
-		ordersRepository.deleteById(id);
-	}
-
-	public Orders nextStatus(Integer id) {
-		Orders o = ordersRepository.findById(id).orElse(null);
-		if (o == null) {
-			return null;
-		} else {
-			o.setStatus(o.getStatus() + 1);
-			return ordersRepository.save(o);
+	// send orders list from customer
+	// return customer number Date().getTime()
+	public Long sendlist(List<Orders> ordersList) {
+		Long customer = new Date().getTime();
+		for(int i = 0; i <ordersList.size(); i++) {
+			ordersList.get(i).setCustomer(customer);
+			ordersList.get(i).setStatus(0);
+			ordersRepository.save(ordersList.get(i));
 		}
+		return customer;
 	}
-	
-//	public void mergeTable(Integer table, Integer status) {
-//		List<Orders> os = ordersRepository.findAllByTableAndStatus(table, status);
-//	}
 }
